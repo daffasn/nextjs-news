@@ -9,7 +9,7 @@ export async function GET(req, {params}) {
     try {
         const res = await prisma.post.findUnique({
             where: {
-                id
+                id: id
             },
             include: {
                 author: {

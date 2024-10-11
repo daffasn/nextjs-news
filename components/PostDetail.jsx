@@ -26,7 +26,7 @@ const PostDetail = () => {
     useEffect(() => {
         const getPost = async() => {
             try {
-                const data = await fetch(`/api/posts/${getDetailPath}`)
+                const data = await fetch(`/api/post/${getDetailPath}`)
                 const res = await data.json()
 
                 setPost(res)

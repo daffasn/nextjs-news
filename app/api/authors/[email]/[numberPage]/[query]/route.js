@@ -6,11 +6,6 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 const ITEMS_PER_PAGE = 10
 
 export async function GET(req, {params}) {
-    const session = await getServerSession(authOptions)
-
-    if (!session) {
-        return NextResponse.json({ error: "Not Authenticated!" }, { status: 401 })
-    }
 
     const email = params.email
     const query = params.query

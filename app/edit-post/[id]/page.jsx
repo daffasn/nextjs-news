@@ -6,7 +6,7 @@ import EditPost from '@/components/EditPost'
 
 const getPost = async(id) => {
   try {
-      const res = await fetch(`${process.env.NEXTAUTH_URL}/api/posts/${id}`, {
+      const res = await fetch(`${process.env.NEXTAUTH_URL}/api/post/${id}`, {
           cache: 'no-store'
       })
 

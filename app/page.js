@@ -8,17 +8,17 @@ async function getPosts(query, currentPage) {
     let data
 
     if (query) {
-      data = await fetch(`${process.env.NEXTAUTH_URL}/api/posts/page/${currentPage}/${query}`, {
+      data = await fetch(`${process.env.NEXTAUTH_URL}/api/posts/${currentPage}/${query}`, {
         cache: "no-store",
       })
     } else {
-      data = await fetch(`${process.env.NEXTAUTH_URL}/api/posts/page/${currentPage}`, {
+      data = await fetch(`${process.env.NEXTAUTH_URL}/api/posts/${currentPage}`, {
         cache: "no-store",
       })
     }
 
     const res = await data.json()
-    const posts = res.posts;
+    const posts = res.posts
     const totalPages = res.totalPages
     
     return { posts, totalPages }

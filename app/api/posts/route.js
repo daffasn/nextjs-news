@@ -1,42 +1,7 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { getServerSession } from "next-auth"
-import { authOptions } from "../auth/[...nextauth]/route"
-
-const ITEMS_PER_PAGE = 2
-
-export async function GET(req) {
-
-    const offset = (2 - 1) * ITEMS_PER_PAGE
-    
-    try {
-        const postsCount = await prisma.post.count()
-        const posts = await prisma.post.findMany({
-            skip: offset,
-            take: ITEMS_PER_PAGE,
-            include: {
-                author: {
-                  select: {
-                    name: true,
-                    image: true,
-                  },
-                },
-            },
-            orderBy: {
-                createdAt: 'desc',
-            },
-        })
-
-        const responseData = {
-            totalPages: Math.ceil(postsCount / ITEMS_PER_PAGE),
-            posts,
-        };
-         
-        return NextResponse.json(responseData)
-    } catch (error) {
-        return NextResponse.json(error)
-    }
-}
+import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 
 export async function POST(req) {
 

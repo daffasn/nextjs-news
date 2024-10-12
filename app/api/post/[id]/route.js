@@ -6,7 +6,22 @@ export async function GET(req, {params}) {
     const id = params.id
     
     try {
-        const posts = await prisma.post.findMany()
+        const posts = await prisma.post.findUnique({
+            where: {
+                id
+            },
+            include: {
+                author: {
+                  select: {
+                    name: true,
+                    image: true,
+                  },
+                },
+            },
+            orderBy: {
+                createdAt: 'desc',
+            },
+        })
 
         const responseData = {
             id: id,

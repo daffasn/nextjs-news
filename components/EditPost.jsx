@@ -57,7 +57,7 @@ const EditPost = ({post}) => {
 
     useEffect(() => {
         const pubId = async() => {
-          const data = await fetch(`/api/posts/${post.id}`)
+          const data = await fetch(`/api/post/${post.id}`)
           const res = await data.json()
           setPublicId(res.publicId)
           setPublicIdTemp(res.publicId)

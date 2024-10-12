@@ -6,9 +6,9 @@ export async function GET(req, {params}) {
     const id = params.id
     
     try {
-        const posts = await prisma.post.findUnique({
+        const post = await prisma.post.findUnique({
             where: {
-                id: id
+                id
             },
             include: {
                 author: {
@@ -19,13 +19,8 @@ export async function GET(req, {params}) {
                 },
             }
         })
-
-        const responseData = {
-            id: id,
-            posts,
-        };
          
-        return NextResponse.json(responseData)
+        return NextResponse.json(post)
     } catch (error) {
         return NextResponse.json(error)
     }

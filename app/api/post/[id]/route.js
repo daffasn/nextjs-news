@@ -9,6 +9,14 @@ export async function GET(req, {params}) {
         const posts = await prisma.post.findUnique({
             where: {
                 id: id
+            },
+            include: {
+                author: {
+                  select: {
+                    name: true,
+                    image: true,
+                  },
+                },
             }
         })
 

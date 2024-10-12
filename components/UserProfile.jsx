@@ -19,7 +19,7 @@ import { useSession } from "next-auth/react"
 import FormButton from "./FormButton"
 import Image from "next/image"
 import { BadgeInfo } from "lucide-react"
-
+import { profileUpdate } from "@/lib/actions"
 
 import { CldUploadButton } from 'next-cloudinary'
 import { useEffect, useState } from "react"
@@ -32,11 +32,14 @@ import {
 
 import AlertError from "./AlertError"
 
-const UserProfile = ({profile}) => {
+const UserProfile = ({profile, provider}) => {
+  
 
   useEffect(() => {
     const pubId = async() => {
-      const data = await fetch(`/api/user/${profile.user.id}`)
+      const data = await fetch(`/api/user/${profile.id}`, {
+        cache: "no-store",
+      })
       const res = await data.json()
       setPublicId(res.publicId)
       setImage(res.image)
@@ -44,7 +47,7 @@ const UserProfile = ({profile}) => {
     }
 
     pubId()
-  }, [profile.user.id])
+  }, [profile.id])
   
 
     const [image, setImage] = useState(null)
@@ -60,8 +63,8 @@ const UserProfile = ({profile}) => {
     const form = useForm({
         resolver: zodResolver(userUpdateSchema),
         defaultValues: {
-          name: profile.user.name,
-          email: profile.user.email
+          name: profile.name,
+          email: profile.email
         }
     })
 
@@ -98,23 +101,16 @@ const UserProfile = ({profile}) => {
     
         
         try {
-            const res = await fetch(`/api/user/${profile.user.id}`, {
-              method: 'PUT',
-              headers: {
-                "Content-type": "application/json" 
-              },
-              body: JSON.stringify(newValues)
-            })
-
-            if (res.ok) {
+            const res = await profileUpdate(profile.id, newValues)
+            
+            if (res.success) {
                 console.log('SUCCESS');
                 update({name: newValues.name, email: newValues.email, image: newValues.image })
+
                 router.push('/')
                 toast.success('Profile Edited Successfully!')
               } else {
-                const errorData = await res.json()
-                console.log('Error:', errorData.message);
-                setError(errorData.message)
+                setError(res.message)
               }
         } catch (error) {
             console.log(error)
@@ -164,7 +160,7 @@ const UserProfile = ({profile}) => {
                   <FormItem>
                     <div className="flex flex-col gap-2">
                     <FormLabel>Password</FormLabel>
-                    {profile?.user?.provider === 'google' && (
+                    {provider === 'google' && (
                       <FormLabel>
                       <Alert>
                         <div className="flex items-center gap-2">
@@ -191,7 +187,7 @@ const UserProfile = ({profile}) => {
                 <CldUploadButton uploadPreset="knour2v7" className="min-h-48 w-full border-2 border-dotted border-black rounded-md grid place-items-center bg-slate-100" onSuccess={handleImageUpload}>
                 {image ? (
                     <div className="">
-                      <Image src={image} height={150} width={150} alt={profile.user.name} />
+                      <Image src={image} height={150} width={150} alt={profile.name} />
                     </div>
                 ) : (
                   <div className='flex flex-col items-center'>

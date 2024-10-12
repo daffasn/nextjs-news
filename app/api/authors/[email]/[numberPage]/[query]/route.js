@@ -7,7 +7,16 @@ const ITEMS_PER_PAGE = 10
 
 export async function GET(req, {params}) {
 
+    const session = await getServerSession(authOptions)
+    
     const email = params.email
+    
+    if (!session) {
+        return NextResponse.json({ error: "Not Authenticated!" }, { status: 401 })
+    } else if (session.user.email !== email) {
+        return NextResponse.json({ error: "Not Authenticated!" }, { status: 401 })
+    }
+
     const query = params.query
 
     const currentPage = Number(params.numberPage)

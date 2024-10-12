@@ -1,13 +1,22 @@
 import { prisma } from "@/lib/prisma"
-import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { NextResponse } from "next/server"
+import { getServerSession } from "next-auth"
+import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 
 const ITEMS_PER_PAGE = 10
 
 export async function GET(req, {params}) {
 
+    const session = await getServerSession(authOptions)
+    
     const email = params.email
+
+    if (!session) {
+        return NextResponse.json({ error: "Not Authenticated!" }, { status: 401 })
+    } else if (session.user.email !== email) {
+        return NextResponse.json({ error: "Not Authenticated!" }, { status: 401 })
+    }
+
     
     const currentPage = Number(params.numberPage)
 

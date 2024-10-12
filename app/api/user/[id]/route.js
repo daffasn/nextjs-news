@@ -7,13 +7,16 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 export async function GET(req, { params }) {
 
     const session = await getServerSession(authOptions)
+    
+    const id = params.id
 
     if (!session) {
+        return NextResponse.json({ error: "Not Authenticated!" }, { status: 401 })
+    } else if (session.user.id !== id) {
         return NextResponse.json({ error: "Not Authenticated!" }, { status: 401 })
     }
 
     try {
-        const id = params.id
         const user = await prisma.user.findUnique({
             where: { id }
         })
@@ -28,15 +31,17 @@ export async function PUT(req, { params }) {
 
     const session = await getServerSession(authOptions)
 
+    const id = params.id
+
     if (!session) {
         return NextResponse.json({ error: "Not Authenticated!" }, { status: 401 })
+    } else if (session.user.id !== id) {
+        return NextResponse.json({ error: "Not Authenticated!" }, { status: 401 })
     }
-     
-    const id = params.id
     
     const {name, email, password, image, publicId} = await req.json()
 
-    console.log("GET INFO USER:", {name, email, password, image, publicId});
+    // console.log("GET INFO USER:", {name, email, password, image, publicId});
 
     const existingUsers = await prisma.user.findMany({
         where: {

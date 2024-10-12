@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
+import { getServerSession } from "next-auth"
+import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 
 export async function GET(req, {params}) {
 
@@ -28,6 +30,12 @@ export async function GET(req, {params}) {
 
 export async function PUT(req, { params }) {
 
+    const session = await getServerSession(authOptions)
+
+    if (!session) {
+        return NextResponse.json({ error: "Not Authenticated!" }, { status: 401 })
+    }
+
     const {title, content, catName, image, publicId} = await req.json()
 
     const id = params.id
@@ -49,6 +57,12 @@ export async function PUT(req, { params }) {
 }
 
 export async function DELETE(req, { params }) {
+
+    const session = await getServerSession(authOptions)
+
+    if (!session) {
+        return NextResponse.json({ error: "Not Authenticated!" }, { status: 401 })
+    }
     
     const id = params.id
 

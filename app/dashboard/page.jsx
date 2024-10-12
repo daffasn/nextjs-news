@@ -4,6 +4,7 @@ import { authOptions } from '../api/auth/[...nextauth]/route'
 import CardBlog from '@/components/CardBlog'
 import SearchContent from '@/components/SearchContent'
 import Pagination from '@/components/Pagination'
+import { cookies } from 'next/headers'
 
 const getPosts = async (email, query, currentPage) => {
     try {
@@ -11,10 +12,12 @@ const getPosts = async (email, query, currentPage) => {
 
         if (query) {
           data = await fetch(`${process.env.NEXTAUTH_URL}/api/authors/${email}/${currentPage}/${query}`, {
+            headers: { Cookie: cookies().toString() },
             cache: "no-store",
           })  
         } else {
           data = await fetch(`${process.env.NEXTAUTH_URL}/api/authors/${email}/${currentPage}`, {
+            headers: { Cookie: cookies().toString() },
             cache: "no-store",
           })
         }

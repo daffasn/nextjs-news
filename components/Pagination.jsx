@@ -15,10 +15,6 @@ const Pagination = ({currentPage, totalPages}) => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  console.log(handler);
-  
-    
-
     useEffect(() => {
       if (searchParams.get('page') === null) {
         setHandler(1)

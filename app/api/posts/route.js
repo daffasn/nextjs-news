@@ -15,9 +15,9 @@ export async function POST(req) {
 
     const authorEmail = session?.user?.email
 
-    if (!title || !content) {
+    if (!title || !content || !catName) {
         return NextResponse.json(
-          { message: "Title and content are required." },
+          { message: "Title, content and category are required." },
           { status: 500 }
         );
     }

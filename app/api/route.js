@@ -1,26 +1,27 @@
 import { NextResponse } from "next/server"
-import { prisma } from "@/lib/prisma"
+import { getServerSession } from "next-auth"
+import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 
 export async function GET(req, {params}) {
-
-    const id = params.id
     
+    const id = params.id
+
     try {
-        const post = await prisma.post.findUnique({
+        const res = await prisma.post.findUnique({
             where: {
                 id
             },
             include: {
                 author: {
-                  select: {
-                    name: true,
-                    image: true,
-                  },
+                    select: {
+                      name: true,
+                      image: true,
+                    },
                 },
             }
         })
-         
-        return NextResponse.json(post)
+        
+        return NextResponse.json(res)
     } catch (error) {
         return NextResponse.json(error)
     }
@@ -28,15 +29,19 @@ export async function GET(req, {params}) {
 
 export async function PUT(req, { params }) {
 
+    const session = await getServerSession(authOptions)
+
+    if (!session) {
+        return NextResponse.json({ error: "Not Authenticated!" }, { status: 401 })
+    }
+
     const {title, content, catName, image, publicId} = await req.json()
 
     const id = params.id
 
     try {
         const post = await prisma.post.update({
-            where: {
-                id
-            },
+            where: {id},
             data: {
                 title, content, image, publicId, catName
             }
@@ -49,14 +54,18 @@ export async function PUT(req, { params }) {
 }
 
 export async function DELETE(req, { params }) {
+
+    const session = await getServerSession(authOptions)
+
+    if (!session) {
+        return NextResponse.json({ error: "Not Authenticated!" }, { status: 401 })
+    }
     
     const id = params.id
 
     try {
         const post = await prisma.post.delete({ 
-            where: {
-                id
-            }
+            where: {id}
         })
 
         return NextResponse.json(post)

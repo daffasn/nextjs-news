@@ -4,7 +4,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 
 export async function GET(req, {params}) {
     
-    const id = params.id
+    const id = params.number
 
     try {
         const res = await prisma.post.findUnique({

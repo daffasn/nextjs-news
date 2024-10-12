@@ -38,6 +38,9 @@ const PostDetail = () => {
         getPost()
     }, [getDetailPath]) 
 
+    console.log(getDetailPath);
+    
+
   return (
     <div>
       <div className='flex justify-between items-center mb-10'>

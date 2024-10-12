@@ -8,19 +8,8 @@ export async function GET(req, {params}) {
     try {
         const posts = await prisma.post.findUnique({
             where: {
-                id
-            },
-            include: {
-                author: {
-                  select: {
-                    name: true,
-                    image: true,
-                  },
-                },
-            },
-            orderBy: {
-                createdAt: 'desc',
-            },
+                id: id
+            }
         })
 
         const responseData = {

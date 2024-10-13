@@ -29,7 +29,7 @@ const SearchContent = () => {
 
   return (
     <div className='mb-10'>
-        <Input placeholder={pathname === '/dashboard' ? "Search something by title..." : "Search something by title or author..."} className="text-xl py-5" onChange={(e) => handleSearch(e.target.value)} defaultValue={searchParams.get("query")?.toString() || ''} />
+        <Input placeholder={pathname === '/dashboard' ? "Search something by title..." : "Search something by title or author..."} className="text-md md:text-xl py-5" onChange={(e) => handleSearch(e.target.value)} defaultValue={searchParams.get("query")?.toString() || ''} />
     </div>
   )
 }

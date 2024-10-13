@@ -36,7 +36,7 @@ const Navbar = () => {
   return (
     <div className='flex justify-between items-center'>
       <div className='flex flex-col'>
-        <Link href='/' className='text-3xl sm:text-4xl font-bold'>
+        <Link href='/' className='text-4xl font-bold'>
             <span className='underline underline-offset-[3.4px]'>Next Blog</span>
             <span>.</span>
         </Link>
@@ -66,7 +66,7 @@ const Navbar = () => {
                     <AvatarUserFallback />
                   </AvatarFallback>
                 </Avatar>
-                <span className='text-base'>{session?.user?.name.length > 30 ? session?.user?.name.slice(0, 30) + '...' : session?.user?.name}</span>
+                <span className='text-base'>{session?.user?.name.length > 25 ? session?.user?.name.slice(0, 25) + '...' : session?.user?.name}</span>
               </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="text-center">

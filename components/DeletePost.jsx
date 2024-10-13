@@ -48,10 +48,12 @@ const DeletePost = ({children, id, publicId}) => {
     try {
       const res = await postDelete(id)
       
-      if (res) {
-        console.log('POST DELETED')
+      if (res.success) {
+        console.log('SUCCESS')
         router.push('/')
         toast.success('Post Deleted Successfully!')
+      } else {
+        console.log(res.message);
       }
     } catch (error) {
       console.log(error);

@@ -124,10 +124,12 @@ const EditPost = ({post}) => {
        try {
         const res = await postEdit(newValues)
 
-        if (res) {
-          console.log('FORM SUBMITTED')
-          toast.success('Post Edited Successfully!')
+        if (res.success) {
+          console.log('SUCCESS')
           router.push('/')
+          toast.success('Post Edited Successfully!')
+        } else {
+          console.log(res.message);
         }
        } catch (error) {
         console.log(error);

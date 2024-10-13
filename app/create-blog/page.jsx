@@ -30,6 +30,7 @@ import {
 import { CldUploadButton } from 'next-cloudinary'
 import { useEffect, useState } from "react"
 import { postSchema } from "@/lib/zod"
+import { postCreate } from "@/lib/actions"
 
 const CreatePostPage = () => {
 
@@ -80,22 +81,14 @@ const CreatePostPage = () => {
         };
         
         try {
-            const res = await fetch('/api/posts', {
-              method: 'POST',
-              headers: {
-                "Content-type": "application/json" 
-              },
-              body: JSON.stringify(newValues)
-            })
+            const res = await postCreate(newValues)
 
-            if (res.ok) { 
+            if (res.success) {
                 console.log('SUCCESS')
                 router.push('/')
                 toast.success('Post Created Successfully!')
               } else {
-                const errorData = await res.json()
-                console.log('Error:', errorData.message);
-                setError(errorData.message)
+                console.log(res.message);
               }
         } catch (error) {
             console.log(error)

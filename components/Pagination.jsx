@@ -39,7 +39,7 @@ const Pagination = ({currentPage, totalPages}) => {
         })
       }
       
-    }, 600)
+    }, 400)
 
     const nextHandler = useDebouncedCallback((e) => {
       console.log('CLICKED');
@@ -53,7 +53,7 @@ const Pagination = ({currentPage, totalPages}) => {
           return newHandler
         })
       }
-    }, 600)
+    }, 400)
 
     const handlerInput =  useDebouncedCallback((term) => {
       

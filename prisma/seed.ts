@@ -11,7 +11,7 @@ async function main() {
     Array.from({ length: 100 }).map(async () => {
       const title = faker.lorem.sentence(3); // Menghasilkan kalimat dengan 3 kata
       const content = faker.lorem.paragraphs(2); // Menghasilkan 2 paragraf
-      const image = faker.image.urlPicsumPhotos(); // Menghasilkan URL gambar
+      const image = faker.image.urlPicsumPhotos({ width: 128 }); // Menghasilkan URL gambar
       const category = faker.helpers.arrayElement(categories); // Memilih kategori secara acak
       const author = faker.helpers.arrayElement(authors); // Memilih kategori secara acak
 

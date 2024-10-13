@@ -40,7 +40,7 @@ const CardBlog = ({post}) => {
                     height={350}
                     width={350}
                     alt={post.title}
-                    className='bg-white max-w-[290px] sm:max-w-[350px] max-h-[350px]'
+                    className='bg-white max-w-[250px] sm:max-w-[350px] max-h-[350px]'
                   /> 
                 ) : (
                   <Image

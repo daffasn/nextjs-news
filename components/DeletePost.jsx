@@ -77,9 +77,7 @@ const DeletePost = ({children, id, publicId}) => {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel
-            
-          </AlertDialogCancel>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
           <form onSubmit={handleDelete}>
             <FormButton loading={isSubmitting}>
               Delete

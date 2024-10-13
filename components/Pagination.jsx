@@ -74,7 +74,7 @@ const Pagination = ({currentPage, totalPages}) => {
       params.set("page", term)
       
       router.replace(`${pathname}?${params.toString()}`)
-    }, 600)
+    }, 400)
     
     
 

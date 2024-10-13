@@ -77,7 +77,7 @@ const PostDetail = () => {
             height={500}
             width={500}
             alt='content-image'
-            className='bg-white max-w-[1000px] max-h-[1000px]'
+            className='bg-white w-full sm:max-w-[1000px] max-h-[1000px]'
             />
         ) : (
             <Image 
